@@ -1,4 +1,5 @@
 # deep-merge
+
 Micro util for personalized deep-merging of objects
 
 Install
@@ -36,7 +37,7 @@ const B = {
             bcc: 'c1'
         }
     },
-    d: 4
+    c: 4
 };
 
 deepMerge(A, B);
@@ -51,14 +52,15 @@ deepMerge(A, B);
             bcb: 'b1',
             bcc: 'c1'
         }
-    }
+    },
+    c: 4
 }
 */
 
-// But I wanted the arrays to concat actually:
+// But I wanted the arrays to concat also:
 
 
-const newDeepMerge = deepMarge.addCase(
+const newDeepMerge = deepMerge.addCase(
     [Array.isArray, Array.isArray],
     (a, b) => a.concat(b)
 );
@@ -75,15 +77,16 @@ newDeepMerge(A, B)
             bcb: 'b1',
             bcc: 'c1'
         }
-    }
+    },
+    c: 4
 }
 */
 
 // Maybe the numbers could sum up and the strings inverse-concat:
 
-const {number, string} = require('@betafcc/is');
+const {number, string} = require('@betafcc/deep-merge').is;
 
-const newerDeepMerge = newDeepMarge.addCases(
+const newerDeepMerge = newDeepMerge.addCases(
     [[number, number], (a, b) => a + b],
     [[string, string], (a, b) => b.concat(a)]
 );
@@ -100,21 +103,29 @@ newerDeepMerge(A, B)
             bcb: 'b1b0',
             bcc: 'c1'
         }
-    }
+    },
+    c: 6
 }
 */
 
 ```
 
 
-Full Api so far:
+Full Api:
 ----------------
 
 ```js
 deepMerge(A, B)
-    .addCase([...test], handler)
-    .addCases(...[ [...test], handler ])
+    .addCase([...tests], handler)
+    .addCases(...[ [...tests], handler ] ])
+    .concat(...args) // the function used for concatenation of non-objects
 ```
 
 TODO
 ----
+
+- [x] Basic
+- [ ] Better Testing
+- [ ] Generalize to any Map-Like
+- [ ] Make dist build
+    - [ ] Port to ES7+ or TypeScript ?

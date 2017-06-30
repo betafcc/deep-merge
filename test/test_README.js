@@ -5,12 +5,12 @@ const {number, string} = require('@betafcc/is');
 const deepMerge = require('../src/index.js');
 
 
-const newDeepMerge = deepMarge.addCase(
+const newDeepMerge = deepMerge.addCase(
   [Array.isArray, Array.isArray],
   (a, b) => a.concat(b)
 );
 
-const newerDeepMerge = newDeepMarge.addCases(
+const newerDeepMerge = newDeepMerge.addCases(
   [[number, number], (a, b) => a + b],
   [[string, string], (a, b) => b.concat(a)]
 );
@@ -37,7 +37,7 @@ const B = {
       bcc: 'c1'
     }
   },
-  d: 4
+  c: 4
 };
 
 const examples = [
@@ -53,7 +53,8 @@ const examples = [
           bcb: 'b1',
           bcc: 'c1'
         }
-      }
+      },
+      c: 4
     }
   ],
   [
@@ -68,9 +69,9 @@ const examples = [
           bcb: 'b1',
           bcc: 'c1'
         }
-      }
+      },
+      c: 4
     }
-
   ],
   [
     newerDeepMerge(A, B),
@@ -84,7 +85,8 @@ const examples = [
           bcb: 'b1b0',
           bcc: 'c1'
         }
-      }
+      },
+      c: 6
     }
   ]
 ]
@@ -92,7 +94,7 @@ const examples = [
 
 describe('Readme examples', () => {
 
-  it('Should equal expected', () => {
+  it('Should equal hand-mades', () => {
     for (const [result, expected] of examples) {
       expect(expected).to.deep.equal(result);
     }
